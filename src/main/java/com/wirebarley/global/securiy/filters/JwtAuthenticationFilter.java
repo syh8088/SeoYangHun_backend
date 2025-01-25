@@ -1,5 +1,7 @@
 package com.wirebarley.global.securiy.filters;
 
+import com.wirebarley.global.exception.errorCode.MemberErrorCode;
+import com.wirebarley.global.exception.exception.UnauthorizedException;
 import com.wirebarley.global.jwt.JwtTokenProvider;
 import com.wirebarley.global.model.response.PrincipalDetails;
 import com.wirebarley.global.securiy.service.CustomUserDetailsService;
@@ -41,7 +43,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (optAccessToken.isPresent()) {
             jwt = optAccessToken.get();
 
-            username = jwtTokenProvider.extractUsernameByAccessToken(jwt);
+            try {
+                username = jwtTokenProvider.extractUsernameByAccessToken(jwt);
+            }
+            catch (ExpiredJwtException e) {
+                throw new UnauthorizedException(MemberErrorCode.FAIL_LOGIN);
+            }
+            catch (SignatureException e) {
+                log.error("Access Token SignatureException Token = {}, 엑세스 토큰이 만료됨", jwt);
+                log.error("JwtAuthenticationFilter.doFilterInternal.SignatureException = {}", e);
+            }
+            catch (MalformedJwtException e) {
+                log.error("Access Token MalformedJwtException Token = {}, 올바르지 않은 엑세스 토큰", jwt);
+                log.error("JwtAuthenticationFilter.doFilterInternal.MalformedJwtException = {}", e);
+            }
+            catch (UnsupportedJwtException e) {
+                log.error("Access Token UnsupportedJwtException Token = {}, 지원하지 않는 엑세스 토큰", jwt);
+                log.error("JwtAuthenticationFilter.doFilterInternal.UnsupportedJwtException = {}", e);
+            }
         }
 
         /**
