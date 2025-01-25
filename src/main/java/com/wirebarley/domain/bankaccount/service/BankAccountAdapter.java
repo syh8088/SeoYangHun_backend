@@ -34,7 +34,7 @@ public interface BankAccountAdapter {
     boolean checkBank(int bankAccountNumber);
 
     /**
-     * <h1>해당 은행에 있는 특정 고객 계좌 등록된 금액을 '티웨이브' 가상 계좌에 등록 합니다.</h1>
+     * <h1>해당 은행에 있는 특정 고객 계좌 등록된 금액을 '와이어바알리' 가상 계좌에 등록 합니다.</h1>
      * </br>
      *
      * 지금은 '우리은행' 밖에 없어서 편의상 조건과 상관없이 "우리은행" 만 출력 하도록 했습니다.</br>
@@ -48,7 +48,7 @@ public interface BankAccountAdapter {
     boolean deposit(BigDecimal depositAmount, int bankAccountNumber);
 
     /**
-     * <h1>'티웨이브' 가상 계좌에 있는 금액을 해당 은행에 이체 합니다.</h1>
+     * <h1>'와이어바알리' 가상 계좌에 있는 금액을 해당 은행에 이체 합니다.</h1>
      * </br>
      *
      * 지금은 '우리은행' 밖에 없어서 편의상 조건과 상관없이 "우리은행" 만 출력 하도록 했습니다.</br>
