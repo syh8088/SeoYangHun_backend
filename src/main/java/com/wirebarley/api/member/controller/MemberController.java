@@ -2,6 +2,7 @@ package com.wirebarley.api.member.controller;
 
 import com.wirebarley.api.member.model.request.SaveMemberRequest;
 import com.wirebarley.api.member.service.MemberApiService;
+import com.wirebarley.domain.member.validator.MemberValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberApiService memberApiService;
+    private final MemberValidator memberValidator;
 
     /**
      * <h1>계정 회원 가입</h1>
@@ -23,6 +25,8 @@ public class MemberController {
      **/
     @PostMapping("/join")
     public ResponseEntity<?> saveMember(@RequestBody SaveMemberRequest saveMemberRequest) {
+
+        memberValidator.validateSaveMember(saveMemberRequest);
 
         memberApiService.saveMember(saveMemberRequest);
         return ResponseEntity.noContent().build();
