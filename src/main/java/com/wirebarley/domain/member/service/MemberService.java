@@ -6,6 +6,8 @@ import com.wirebarley.domain.member.model.request.SaveMemberInPut;
 import com.wirebarley.domain.member.repository.MemberRepository;
 import com.wirebarley.domain.member.repository.MemberRoleMappingRepository;
 import com.wirebarley.domain.role.model.entity.Role;
+import com.wirebarley.global.exception.errorCode.MemberErrorCode;
+import com.wirebarley.global.exception.exception.BusinessException;
 import com.wirebarley.global.util.Snowflake;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +44,27 @@ public class MemberService {
         return savedMember;
     }
 
+    /**
+     * <h1>계정 정보 조회</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    @Transactional(readOnly = true)
+    public Member selectMemberEntityThenThrowExceptionByMemberNo(long memberNo) {
+        return memberRepository.selectMemberEntityByMemberNo(memberNo)
+                .orElseThrow(() ->  new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+    }
 
+    /**
+     * <h1>계정 정보 조회</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    @Transactional(readOnly = true)
+    public Member selectMemberEntityThenThrowExceptionByMemberId(String memberId) {
+        return memberRepository.selectMemberEntityByMemberId(memberId)
+                .orElseThrow(() ->  new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+    }
 }
