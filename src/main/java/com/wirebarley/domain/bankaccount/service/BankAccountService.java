@@ -65,8 +65,8 @@ public class BankAccountService {
      * @author syh
      * @version 1.0.0
      **/
-    public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankAccountNo, int bankAccountNumber) {
-        return bankAccountRepository.selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(memberNo, bankAccountNo, bankAccountNumber);
+    public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankNo, int bankAccountNumber) {
+        return bankAccountRepository.selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(memberNo, bankNo, bankAccountNumber);
     }
 
     /**

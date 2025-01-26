@@ -61,7 +61,8 @@ public class TransferTransactionApiService {
                 memberNo,
                 bankAccountWithBankOutPut.getBankAccountNo(),
                 toBankOutPut.getBankNo(),
-                toBankAccountNumber
+                toBankAccountNumber,
+                transferAmount
         );
     }
 

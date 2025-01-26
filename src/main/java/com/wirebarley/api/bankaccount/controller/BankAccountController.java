@@ -24,7 +24,7 @@ public class BankAccountController {
     private final BankAccountValidator bankAccountValidator;
 
     /**
-     * <h1>등록된 은행 계좌 조회 하기</h1>
+     * <h1>등록된 은행 계좌 목록 조회 하기</h1>
      *
      * @author syh
      * @version 1.0.0

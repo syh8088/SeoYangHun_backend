@@ -72,7 +72,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepositoryCustom {
 	}
 
 	@Override
-	public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankAccountNo, int bankAccountNumber) {
+	public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankNo, int bankAccountNumber) {
 		return Optional.ofNullable(queryFactory
 				.select(
 						new QBankAccountWithBankOutPut(
@@ -85,7 +85,9 @@ public class BankAccountRepositoryImpl implements BankAccountRepositoryCustom {
 				.from(qBankAccount)
 				.innerJoin(qMember)
 				.on(qBankAccount.member.eq(qMember))
-				.where(qMember.memberNo.eq(memberNo).and(qBankAccount.bankAccountNo.eq(bankAccountNo).and(qBankAccount.bankAccountNumber.eq(bankAccountNumber))))
+				.innerJoin(qBank)
+				.on(qBankAccount.bank.eq(qBank))
+				.where(qMember.memberNo.eq(memberNo).and(qBank.bankNo.eq(bankNo).and(qBankAccount.bankAccountNumber.eq(bankAccountNumber))))
 				.fetchOne());
 	}
 

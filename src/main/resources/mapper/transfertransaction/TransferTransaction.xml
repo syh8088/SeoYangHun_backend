@@ -30,7 +30,7 @@
 		ON
 			to_b.bank_no = tt.to_bank_no
 		WHERE
-			tt.member_no = #{memberNo}
+			tt.from_member_no = #{memberNo}
 		ORDER BY
 			tt.transfer_transaction_no DESC, tt.created_at DESC
 		LIMIT #{limit}

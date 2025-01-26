@@ -19,10 +19,10 @@ public interface TransferTransactionMapper {
 	);
 
 	List<TransferTransactionOutPut> selectTransferTransactionListByMemberNo(
-			@Param("transferTransactionNo") long transferTransactionNo,
-			@Param("createdDateTime") LocalDateTime createdDateTime,
 			@Param("memberNo") long memberNo,
-			@Param("limit") int limit
+			@Param("limit") int limit,
+			@Param("transferTransactionNo") long transferTransactionNo,
+			@Param("createdDateTime") LocalDateTime createdDateTime
 
 	);
 }

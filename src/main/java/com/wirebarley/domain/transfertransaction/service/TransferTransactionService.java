@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,11 +25,17 @@ public class TransferTransactionService {
 
     private final Snowflake snowflake = new Snowflake();
 
+    /**
+     * <h1>이체 내역을 저장 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
     @Transactional
-    public void saverTransferTransaction(long fromMemberNo, long fromBankAccountNo, long toBankNo, int toBankAccountNumber) {
+    public void saverTransferTransaction(long fromMemberNo, long fromBankAccountNo, long toBankNo, int toBankAccountNumber, BigDecimal transferAmount) {
 
         TransferTransaction transferTransaction
-                = TransferTransaction.of(snowflake.nextId(), fromMemberNo, fromBankAccountNo, toBankNo, toBankAccountNumber);
+                = TransferTransaction.of(snowflake.nextId(), fromMemberNo, fromBankAccountNo, toBankNo, toBankAccountNumber, transferAmount);
 
         transferTransactionRepository.save(transferTransaction);
     }
@@ -54,9 +61,9 @@ public class TransferTransactionService {
 
         return transferTransactionMapper.selectTransferTransactionListByMemberNo(
                 selectTransferTransactionInPut.getFromMemberNo(),
-                selectTransferTransactionInPut.getCreatedDateTime(),
+                selectTransferTransactionInPut.getLimit(),
                 selectTransferTransactionInPut.getTransferTransactionNo(),
-                selectTransferTransactionInPut.getLimit()
-        );
+                selectTransferTransactionInPut.getCreatedDateTime()
+                );
     }
 }
