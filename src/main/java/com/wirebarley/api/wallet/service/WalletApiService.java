@@ -117,7 +117,7 @@ public class WalletApiService {
         WalletWithMemberOutPut walletWithMember = walletService.selectWalletWithMemberThenThrowExceptionByMemberNo(memberNo);
 
         // 2. 출금 한도 유효성 검사
-        walletValidator.validationWithdrawalLimit(walletWithMember.getWalletNo(), walletWithdrawRequest.getWithdrawAmount());
+        walletValidator.validationWithdrawalLimit(walletWithMember.getWalletNo());
 
         // 3. 고객의 연동된 계좌가 있는지 체크
         BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNo(memberNo);

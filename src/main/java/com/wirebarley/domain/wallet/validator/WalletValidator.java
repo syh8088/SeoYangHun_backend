@@ -25,7 +25,6 @@ public class WalletValidator {
     private final WalletTransactionRepository walletTransactionRepository;
 
     private final BigDecimal DAILY_WITHDRAWAL_LIMIT  = BigDecimal.valueOf(30_000_000);
-    private final BigDecimal ONE_TIME_WITHDRAWAL_LIMIT  = BigDecimal.valueOf(10_000_000);
 
     private final DecimalFormat FORMATTER = new DecimalFormat("###,###");
 
@@ -63,17 +62,12 @@ public class WalletValidator {
     /**
      * <h1>월렛 출금 유효성 검사하기</h1>
      * <pre>
-     *     - 1일 출금 한도: 3,000만 원 유효성 검사
-     *     - 1회 출금 한도: 1,000만 원 유효성 검사
+     *     - 1일 출금 한도: 1,000만 원 유효성 검사
      * </pre>
      * @author syh
      * @version 1.0.0
      **/
-    public void validationWithdrawalLimit(long walletNo, BigDecimal withdrawAmount) {
-
-        if (ONE_TIME_WITHDRAWAL_LIMIT.compareTo(withdrawAmount) < 0) {
-            throw new BusinessException(WalletErrorCode.ONE_TIME_WITHDRAWAL_LIMIT, new Object[]{ FORMATTER.format(ONE_TIME_WITHDRAWAL_LIMIT.longValue()) });
-        }
+    public void validationWithdrawalLimit(long walletNo) {
 
         LocalDateTime startDatetime = TimeConverter.nowStartDateTime();
         LocalDateTime endDatetime = TimeConverter.nowEndDateTime();
