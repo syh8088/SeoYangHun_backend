@@ -1,0 +1,37 @@
+services:
+  # Infra services
+  mysql-server:
+    container_name: mysql-server
+    image: mysql
+    networks:
+      - wirebarley_network
+    environment:
+      - TZ=Asia/Seoul
+      - MYSQL_DATABASE=wirebarley
+      - MYSQL_ROOT_PASSWORD=1234
+#      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p1234']
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./init.sql:/data/application/init.sql
+    command: --init-file /data/application/init.sql
+
+  wirebarley-service:
+    image: wirebarley-service
+    networks:
+      - wirebarley_network
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+
+networks:
+  wirebarley_network:
+    driver: bridge

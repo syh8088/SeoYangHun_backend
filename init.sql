@@ -164,5 +164,5 @@ create table wirebarley.transfer_transactions
     created_at             datetime not null,
     updated_at             datetime null
 );
-create index wirebarley.transfer_transactions_index
-    on transfer_transactions (from_member_no asc, transfer_transaction_no desc, created_at desc);
+create index transfer_transactions_index
+    on wirebarley.transfer_transactions (from_member_no asc, transfer_transaction_no desc, created_at desc);
