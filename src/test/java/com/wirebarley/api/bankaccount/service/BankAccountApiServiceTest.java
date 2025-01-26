@@ -57,7 +57,6 @@ class BankAccountApiServiceTest extends IntegrationTestSupport {
         // given
         MemberWithWalletOutPut memberWithWalletOutPut = this.createMember();
         long memberNo = memberWithWalletOutPut.getMemberNo();
-        long walletNo = memberWithWalletOutPut.getWalletNo();
 
         String bankName = "우리은행";
         int bankAccountNumber = 1234;
@@ -86,7 +85,6 @@ class BankAccountApiServiceTest extends IntegrationTestSupport {
         // given
         MemberWithWalletOutPut memberWithWalletOutPut = this.createMember();
         long memberNo = memberWithWalletOutPut.getMemberNo();
-        long walletNo = memberWithWalletOutPut.getWalletNo();
 
         String bankName = "우리은행";
         int bankAccountNumber = 1234;
