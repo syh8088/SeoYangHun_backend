@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wirebarley.domain.bank.model.entity.QBank;
 import com.wirebarley.domain.bankaccount.model.entity.QBankAccount;
 import com.wirebarley.domain.member.model.entity.QMember;
-import com.wirebarley.domain.resource.model.response.QResourceWithRoleOutPut;
 import com.wirebarley.domain.transfertransaction.model.entity.QTransferTransaction;
 import com.wirebarley.domain.transfertransaction.model.response.QTransferTransactionOutPut;
 import com.wirebarley.domain.transfertransaction.model.response.TransferTransactionOutPut;
