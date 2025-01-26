@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -41,9 +43,39 @@ public class BankAccountService {
      * @author syh
      * @version 1.0.0
      **/
-    @Transactional(readOnly = true)
-    public BankAccountWithBankOutPut selectBankAccountThenThrowExceptionByMemberNo(long memberNo) {
-        return bankAccountRepository.selectBankAccountByMemberNo(memberNo)
+    public BankAccountWithBankOutPut selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo) {
+        return this.selectBankAccountByMemberNoAndBankAccountNo(memberNo, bankAccountNo)
                 .orElseThrow(() ->  new BusinessException(BankAccountErrorCode.NOT_FOUND_BANK_ACCOUNT));
+    }
+
+    /**
+     * <h1>해당 계정으로 은행 계좌 조회 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo) {
+        return bankAccountRepository.selectBankAccountByMemberNoAndBankAccountNo(memberNo, bankAccountNo);
+    }
+
+    /**
+     * <h1>해당 계정으로 은행 계좌 조회 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    public Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankAccountNo, int bankAccountNumber) {
+        return bankAccountRepository.selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(memberNo, bankAccountNo, bankAccountNumber);
+    }
+
+    /**
+     * <h1>등록된 은행 계좌 {@link BankAccount#isDeleted} update 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    @Transactional
+    public void updateBankAccountIsDeletedByBankAccountNo(long bankAccountNo, boolean isDeleted) {
+        bankAccountRepository.updateBankAccountIsDeletedByBankAccountNo(bankAccountNo, isDeleted);
     }
 }

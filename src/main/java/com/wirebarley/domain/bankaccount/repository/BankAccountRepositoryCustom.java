@@ -7,8 +7,11 @@ import java.util.Optional;
 
 public interface BankAccountRepositoryCustom {
 
+    Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo);
 
-    Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNo(long memberNo);
+    boolean existsBankAccountByMemberNoAndBankNoAndBankAccountNumberAndIsDeleted(long memberNo, long bankNo, int bankAccountNumber, boolean isDeleted);
 
-    boolean existsBankAccountByMemberNoAndBankNo(long memberNo, long bankNo);
+    boolean existsBankAccountByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo);
+
+    Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankAccountNo, int bankAccountNumber);
 }

@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "bank_accounts")
-public class BankAccount extends CommonEntity {
+@Table(name = "bank_account_histories")
+public class BankAccountHistory extends CommonEntity {
 
     @Id
-    @Column(name = "bank_account_no")
-    private Long bankAccountNo;
+    @Column(name = "bank_account_history_no")
+    private Long bankAccountHistoryNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
@@ -29,25 +29,20 @@ public class BankAccount extends CommonEntity {
     @Column(name = "bank_account_number")
     private int bankAccountNumber;
 
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
-
     @Builder
-    private BankAccount(Long bankAccountNo, Member member, Bank bank, int bankAccountNumber, boolean isDeleted) {
-        this.bankAccountNo = bankAccountNo;
+    private BankAccountHistory(Long bankAccountHistoryNo, Member member, Bank bank, int bankAccountNumber) {
+        this.bankAccountHistoryNo = bankAccountHistoryNo;
         this.member = member;
         this.bank = bank;
         this.bankAccountNumber = bankAccountNumber;
-        this.isDeleted = isDeleted;
     }
 
-    public static BankAccount of(long bankAccountNo, Member member, long bankNo, int bankAccountNumber) {
-        return BankAccount.builder()
-                .bankAccountNo(bankAccountNo)
+    public static BankAccountHistory of(long bankAccountHistoryNo, Member member, long bankNo, int bankAccountNumber) {
+        return BankAccountHistory.builder()
+                .bankAccountHistoryNo(bankAccountHistoryNo)
                 .member(member)
                 .bank(Bank.of(bankNo))
                 .bankAccountNumber(bankAccountNumber)
-                .isDeleted(false)
                 .build();
     }
 }

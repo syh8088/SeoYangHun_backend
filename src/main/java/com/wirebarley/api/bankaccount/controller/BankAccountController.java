@@ -34,7 +34,25 @@ public class BankAccountController {
 
         bankAccountValidator.validateSaveBankAccount(jwtMemberRequest.getMemberNo(), bankNo, insertBankAccountRequest);
 
-        bankAccountApiService.saveBankAccount(jwtMemberRequest.getMemberNo(), insertBankAccountRequest);
+        bankAccountApiService.saveBankAccount(jwtMemberRequest.getMemberNo(), bankNo, insertBankAccountRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * <h1>은행 계좌 삭제</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    @DeleteMapping("{bankAccountNo}")
+    public ResponseEntity<?> deleteBankAccount(
+            @LoginMember JwtMemberRequest jwtMemberRequest,
+            @PathVariable("bankAccountNo") long bankAccountNo
+    ) {
+
+        bankAccountValidator.validateDeleteBankAccount(jwtMemberRequest.getMemberNo(), bankAccountNo);
+
+        bankAccountApiService.deleteBankAccount(jwtMemberRequest.getMemberNo(), bankAccountNo);
         return ResponseEntity.noContent().build();
     }
 }
