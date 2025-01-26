@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -77,5 +78,16 @@ public class BankAccountService {
     @Transactional
     public void updateBankAccountIsDeletedByBankAccountNo(long bankAccountNo, boolean isDeleted) {
         bankAccountRepository.updateBankAccountIsDeletedByBankAccountNo(bankAccountNo, isDeleted);
+    }
+
+    /**
+     * <h1>등록된 은행 계좌 조회 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    @Transactional(readOnly = true)
+    public List<BankAccountWithBankOutPut> selectBankAccountList(long memberNo) {
+        return bankAccountRepository.selectBankAccountList(memberNo);
     }
 }

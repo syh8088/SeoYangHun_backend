@@ -59,15 +59,16 @@ public class WalletController {
      * @author syh
      * @version 1.0.0
      **/
-    @PostMapping("/deposit")
+    @PostMapping("/bank-accounts/{bankAccountNo}/deposit")
     public ResponseEntity<?> deposit(
             @LoginMember JwtMemberRequest jwtMemberRequest,
+            @PathVariable("bankAccountNo") long bankAccountNo,
             @RequestBody WalletDepositRequest walletDepositRequest
     ) {
 
         walletValidator.validatorWalletDepositBalance(walletDepositRequest);
 
-        walletApiService.deposit(jwtMemberRequest.getMemberNo(), walletDepositRequest);
+        walletApiService.deposit(jwtMemberRequest.getMemberNo(),bankAccountNo, walletDepositRequest);
         return ResponseEntity.noContent().build();
     }
 
@@ -77,15 +78,16 @@ public class WalletController {
      * @author syh
      * @version 1.0.0
      **/
-    @PostMapping("/withdraw")
+    @PostMapping("/bank-accounts/{bankAccountNo}/withdraw")
     public ResponseEntity<?> withdraw(
             @LoginMember JwtMemberRequest jwtMemberRequest,
+            @PathVariable("bankAccountNo") long bankAccountNo,
             @RequestBody WalletWithdrawRequest walletWithdrawRequest
     ) {
 
         walletValidator.validatorWalletWithdrawBalance(walletWithdrawRequest);
 
-        walletApiService.withdraw(jwtMemberRequest.getMemberNo(), walletWithdrawRequest);
+        walletApiService.withdraw(jwtMemberRequest.getMemberNo(), bankAccountNo, walletWithdrawRequest);
         return ResponseEntity.noContent().build();
     }
 }

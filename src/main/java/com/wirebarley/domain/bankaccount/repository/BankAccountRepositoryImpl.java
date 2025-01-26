@@ -8,6 +8,7 @@ import com.wirebarley.domain.bankaccount.model.response.QBankAccountWithBankOutP
 import com.wirebarley.domain.member.model.entity.QMember;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BankAccountRepositoryImpl implements BankAccountRepositoryCustom {
@@ -86,6 +87,24 @@ public class BankAccountRepositoryImpl implements BankAccountRepositoryCustom {
 				.on(qBankAccount.member.eq(qMember))
 				.where(qMember.memberNo.eq(memberNo).and(qBankAccount.bankAccountNo.eq(bankAccountNo).and(qBankAccount.bankAccountNumber.eq(bankAccountNumber))))
 				.fetchOne());
+	}
+
+	@Override
+	public List<BankAccountWithBankOutPut> selectBankAccountList(long memberNo) {
+		return queryFactory
+				.select(
+						new QBankAccountWithBankOutPut(
+								qBankAccount.bankAccountNo,
+								qBank.bankNo,
+								qBank.bankName,
+								qBankAccount.bankAccountNumber
+						)
+				)
+				.from(qBankAccount)
+				.innerJoin(qMember)
+				.on(qBankAccount.member.eq(qMember))
+				.where(qMember.memberNo.eq(memberNo).and(qBankAccount.isDeleted.eq(false)))
+				.fetch();
 	}
 }
 

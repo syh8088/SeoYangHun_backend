@@ -67,13 +67,13 @@ public class WalletApiService {
      * @version 1.0.0
      **/
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void deposit(long memberNo, WalletDepositRequest walletDepositRequest) {
+    public void deposit(long memberNo, long bankAccountNo, WalletDepositRequest walletDepositRequest) {
 
         // 1. 회원 정보 및 wallet 조회
         WalletWithMemberOutPut walletWithMember = walletService.selectWalletWithMemberThenThrowExceptionByMemberNo(memberNo);
 
         // 2. 고객의 연동된 계좌가 있는지 체크
-        BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNo(memberNo);
+        BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(memberNo, bankAccountNo);
 
         // 3. 실제로 존재하는 은행 계좌인지 체크 합니다.
         BankAccountAdapter handlerBankAccountService = BankAccountAdapter.getHandlerBankAccountServices(bankAccountAdapters);
@@ -111,7 +111,7 @@ public class WalletApiService {
      * @version 1.0.0
      **/
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void withdraw(long memberNo, WalletWithdrawRequest walletWithdrawRequest) {
+    public void withdraw(long memberNo, long bankAccountNo, WalletWithdrawRequest walletWithdrawRequest) {
 
         // 1. 회원 정보 및 wallet 조회
         WalletWithMemberOutPut walletWithMember = walletService.selectWalletWithMemberThenThrowExceptionByMemberNo(memberNo);
@@ -120,7 +120,7 @@ public class WalletApiService {
         walletValidator.validationWithdrawalLimit(walletWithMember.getWalletNo());
 
         // 3. 고객의 연동된 계좌가 있는지 체크
-        BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNo(memberNo);
+        BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(memberNo, bankAccountNo);
 
         // 4. 실제로 존재하는 은행 계좌인지 체크 합니다.
         BankAccountAdapter handlerBankAccountService = BankAccountAdapter.getHandlerBankAccountServices(bankAccountAdapters);

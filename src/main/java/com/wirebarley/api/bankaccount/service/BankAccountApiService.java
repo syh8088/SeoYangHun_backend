@@ -76,8 +76,18 @@ public class BankAccountApiService {
         BankAccountWithBankOutPut bankAccountWithBank = bankAccountService.selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(memberNo, bankAccountNo);
 
         BankAccountAdapter handlerBankAccountService = BankAccountAdapter.getHandlerBankAccountServices(bankAccountAdapters);
-        BankAccountOutPut bankAccountInfo = handlerBankAccountService.getBankAccountInfo(bankAccountWithBank.getBankAccountNumber());
+        handlerBankAccountService.getBankAccountInfo(bankAccountWithBank.getBankAccountNumber());
 
         bankAccountService.updateBankAccountIsDeletedByBankAccountNo(bankAccountNo, true);
+    }
+
+    /**
+     * <h1>등록된 은행 계좌 조회 합니다.</h1>
+     *
+     * @author syh
+     * @version 1.0.0
+     **/
+    public List<BankAccountWithBankOutPut> selectBankAccountList(long memberNo) {
+        return bankAccountService.selectBankAccountList(memberNo);
     }
 }

@@ -3,6 +3,7 @@ package com.wirebarley.domain.bankaccount.repository;
 
 import com.wirebarley.domain.bankaccount.model.response.BankAccountWithBankOutPut;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BankAccountRepositoryCustom {
@@ -14,4 +15,6 @@ public interface BankAccountRepositoryCustom {
     boolean existsBankAccountByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo);
 
     Optional<BankAccountWithBankOutPut> selectBankAccountByMemberNoAndBankNoAndBankAccountNumber(long memberNo, long bankAccountNo, int bankAccountNumber);
+
+    List<BankAccountWithBankOutPut> selectBankAccountList(long memberNo);
 }
