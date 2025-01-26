@@ -67,15 +67,19 @@ public class WalletValidator {
      * @author syh
      * @version 1.0.0
      **/
-    public void validationWithdrawalLimit(long walletNo) {
+    public void validationWithdrawalLimit(long walletNo, BigDecimal requestWithdrawAmount) {
 
         LocalDateTime startDatetime = TimeConverter.nowStartDateTime();
         LocalDateTime endDatetime = TimeConverter.nowEndDateTime();
         BigDecimal bailyWithdrawalBalance
                 = walletTransactionRepository.selectDailyWithdrawalBalanceByWalletNo(walletNo, WalletTransactionType.WITHDRAW, startDatetime, endDatetime);
 
-        if (!Objects.isNull(bailyWithdrawalBalance) && DAILY_WITHDRAWAL_LIMIT.compareTo(bailyWithdrawalBalance) < 0) {
-            throw new BusinessException(WalletErrorCode.DAILY_WITHDRAWAL_LIMIT, new Object[]{ FORMATTER.format(DAILY_WITHDRAWAL_LIMIT.longValue()) });
+        if (!Objects.isNull(bailyWithdrawalBalance)) {
+
+            BigDecimal sumAmount = bailyWithdrawalBalance.add(requestWithdrawAmount);
+            if (DAILY_WITHDRAWAL_LIMIT.compareTo(sumAmount) < 0) {
+                throw new BusinessException(WalletErrorCode.DAILY_WITHDRAWAL_LIMIT, new Object[]{ FORMATTER.format(DAILY_WITHDRAWAL_LIMIT.longValue()) });
+            }
         }
     }
 }

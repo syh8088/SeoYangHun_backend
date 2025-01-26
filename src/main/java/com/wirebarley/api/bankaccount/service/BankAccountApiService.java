@@ -1,6 +1,7 @@
 package com.wirebarley.api.bankaccount.service;
 
 import com.wirebarley.api.bankaccount.model.request.InsertBankAccountRequest;
+import com.wirebarley.domain.bankaccount.model.entity.BankAccount;
 import com.wirebarley.domain.bankaccount.model.response.BankAccountOutPut;
 import com.wirebarley.domain.bankaccount.model.response.BankAccountWithBankOutPut;
 import com.wirebarley.domain.bankaccount.service.BankAccountAdapter;
@@ -37,7 +38,7 @@ public class BankAccountApiService {
      * @version 1.0.0
      **/
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void saveBankAccount(long memberNo, long bankNo, InsertBankAccountRequest insertBankAccountRequest) {
+    public long saveBankAccount(long memberNo, long bankNo, InsertBankAccountRequest insertBankAccountRequest) {
 
         Member member = memberService.selectMemberEntityThenThrowExceptionByMemberNo(memberNo);
 
@@ -52,11 +53,13 @@ public class BankAccountApiService {
             BankAccountAdapter handlerBankAccountService = BankAccountAdapter.getHandlerBankAccountServices(bankAccountAdapters);
             BankAccountOutPut bankAccountInfo = handlerBankAccountService.getBankAccountInfo(insertBankAccountRequest.getBankAccountNumber());
 
-            bankAccountService.saveBankAccount(member, bankAccountInfo);
+            return bankAccountService.saveBankAccount(member, bankAccountInfo);
         }
         else {
             BankAccountWithBankOutPut bankAccountWithBankOutPut = optionalBankAccountWithBank.get();
             bankAccountService.updateBankAccountIsDeletedByBankAccountNo(bankAccountWithBankOutPut.getBankAccountNo(), false);
+
+            return bankAccountWithBankOutPut.getBankAccountNo();
         }
     }
 

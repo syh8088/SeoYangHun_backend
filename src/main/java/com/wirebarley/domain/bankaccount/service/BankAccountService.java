@@ -32,10 +32,12 @@ public class BankAccountService {
      * @version 1.0.0
      **/
     @Transactional
-    public void saveBankAccount(Member member, BankAccountOutPut bankAccountOutPut) {
+    public long saveBankAccount(Member member, BankAccountOutPut bankAccountOutPut) {
 
         BankAccount bankAccount = BankAccount.of(snowflake.nextId(), member, bankAccountOutPut.getBankNo(), bankAccountOutPut.getBankAccountNumber());
-        bankAccountRepository.save(bankAccount);
+        BankAccount savedBankAccount = bankAccountRepository.save(bankAccount);
+
+        return savedBankAccount.getBankAccountNo();
     }
 
     /**
