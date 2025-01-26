@@ -61,6 +61,25 @@ public interface BankAccountAdapter {
      */
     boolean withdraw(BigDecimal withdrawAmount, int bankAccountNumber);
 
+    /**
+     * <h1>'와이어바알리' 전용 출금 계좌에서 다른 계좌로 금액을 이체 하는 기능 입니다.
+     *
+     * - 수수료 계산: 이체 금액의 1%를 수수료로 부과합니다.
+     * </br>
+     *
+     * 지금은 '우리은행' 밖에 없어서 편의상 조건과 상관없이 "우리은행" 만 출력 하도록 했습니다.</br>
+     *
+     * 기능을 더 추가해야 된다면 만약 은행 서버가 죽었을때 대비해서 재시도를 통해 정상적인 데이터 응답을 받아 올 수 있도록 해야 합니다. 단 재시도시
+     * 재시도가 가능한 Exception 만 구분 해서 재시도를 해야 합니다.
+     *
+     * @param fromBankName:
+     * @param fromBankAccountNumber:
+     * @param toBankName:
+     * @param toBankAccountNumber:
+     * @param transferAmount: 이체 금액
+     */
+    boolean transferTransaction(String fromBankName, int fromBankAccountNumber, String toBankName, int toBankAccountNumber, BigDecimal transferAmount);
+
 
     boolean supports();
 

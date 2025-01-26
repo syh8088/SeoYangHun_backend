@@ -55,7 +55,6 @@ public class BankAccountApiService {
             bankAccountService.saveBankAccount(member, bankAccountInfo);
         }
         else {
-
             BankAccountWithBankOutPut bankAccountWithBankOutPut = optionalBankAccountWithBank.get();
             bankAccountService.updateBankAccountIsDeletedByBankAccountNo(bankAccountWithBankOutPut.getBankAccountNo(), false);
         }

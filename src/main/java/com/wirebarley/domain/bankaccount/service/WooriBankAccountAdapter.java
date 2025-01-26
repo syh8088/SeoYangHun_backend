@@ -43,6 +43,11 @@ public class WooriBankAccountAdapter implements BankAccountAdapter {
     }
 
     @Override
+    public boolean transferTransaction(String fromBankName, int fromBankAccountNumber, String toBankName, int toBankAccountNumber, BigDecimal transferAmount) {
+        return true;
+    }
+
+    @Override
     public boolean supports() {
         return true;
     }

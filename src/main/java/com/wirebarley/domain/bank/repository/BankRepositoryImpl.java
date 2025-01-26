@@ -7,6 +7,7 @@ import com.wirebarley.domain.bank.model.response.QBankOutPut;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BankRepositoryImpl implements BankRepositoryCustom {
 
@@ -29,6 +30,20 @@ public class BankRepositoryImpl implements BankRepositoryCustom {
 				)
 				.from(qBank)
 				.fetch();
+	}
+
+	@Override
+	public Optional<BankOutPut> selectBankByBankNo(long bankNo) {
+		return Optional.ofNullable(queryFactory
+				.select(
+						new QBankOutPut(
+								qBank.bankNo,
+								qBank.bankName
+						)
+				)
+				.from(qBank)
+				.where(qBank.bankNo.eq(bankNo))
+				.fetchOne());
 	}
 }
 

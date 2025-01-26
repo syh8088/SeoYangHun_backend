@@ -50,4 +50,10 @@ public class BankAccount extends CommonEntity {
                 .isDeleted(false)
                 .build();
     }
+
+    public static BankAccount of(long bankAccountNo) {
+        return BankAccount.builder()
+                .bankAccountNo(bankAccountNo)
+                .build();
+    }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wirebarley.domain.transfertransaction.repository.TransferTransactionMapper">
+
+	<select id="selectFirstTransferTransactionListByMemberNo" resultType="com.wirebarley.domain.transfertransaction.model.response.TransferTransactionOutPut">
+		SELECT
+			tt.transfer_transaction_no AS 'transferTransactionNo',
+			tt.from_member_no AS 'fromMemberNo',
+			ba.bank_account_no AS 'fromBankAccountNo',
+			from_b.bank_no AS 'fromBankNo',
+			from_b.bank_name AS 'fromBankName',
+			ba.bank_account_number AS 'fromBankAccountNumber',
+			to_b.bank_no AS 'toBankNo',
+			to_b.bank_name AS 'toBankName',
+			tt.to_bank_account_number AS 'toBankAccountNumber',
+			tt.created_at AS 'createdDateTime',
+			tt.transfer_amount AS 'transferAmount'
+		FROM
+			wirebarley.transfer_transactions AS tt
+		INNER JOIN
+			wirebarley.bank_accounts AS ba
+		ON
+			tt.from_bank_account_no = ba.bank_account_no
+		INNER JOIN
+			wirebarley.banks AS from_b
+		ON
+			from_b.bank_no = ba.bank_no
+		INNER JOIN
+			wirebarley.banks AS to_b
+		ON
+			to_b.bank_no = tt.to_bank_no
+		WHERE
+			tt.member_no = #{memberNo}
+		ORDER BY
+			tt.transfer_transaction_no DESC, tt.created_at DESC
+		LIMIT #{limit}
+	</select>
+
+    <select id="selectTransferTransactionListByMemberNo" resultType="com.wirebarley.domain.transfertransaction.model.response.TransferTransactionOutPut">
+		SELECT
+			tt.transfer_transaction_no AS 'transferTransactionNo',
+			tt.from_member_no AS 'fromMemberNo',
+			ba.bank_account_no AS 'fromBankAccountNo',
+			from_b.bank_no AS 'fromBankNo',
+			from_b.bank_name AS 'fromBankName',
+			ba.bank_account_number AS 'fromBankAccountNumber',
+			to_b.bank_no AS 'toBankNo',
+			to_b.bank_name AS 'toBankName',
+			tt.to_bank_account_number AS 'toBankAccountNumber',
+			tt.created_at AS 'createdDateTime',
+			tt.transfer_amount AS 'transferAmount'
+		FROM
+			wirebarley.transfer_transactions AS tt
+		INNER JOIN
+			wirebarley.bank_accounts AS ba
+		ON
+			tt.from_bank_account_no = ba.bank_account_no
+		INNER JOIN
+			wirebarley.banks AS from_b
+		ON
+			from_b.bank_no = ba.bank_no
+		INNER JOIN
+			wirebarley.banks AS to_b
+		ON
+			to_b.bank_no = tt.to_bank_no
+		WHERE
+			tt.from_member_no = #{memberNo} AND
+			((tt.created_at = #{createdDateTime} AND tt.transfer_transaction_no <![CDATA[<]]> #{transferTransactionNo}) OR (tt.created_at <![CDATA[<]]> #{createdDateTime}))
+		ORDER BY
+			tt.transfer_transaction_no DESC, tt.created_at DESC
+		LIMIT #{limit}
+	</select>
+
+
+</mapper>
