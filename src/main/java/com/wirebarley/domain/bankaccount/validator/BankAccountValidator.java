@@ -4,6 +4,7 @@ import com.wirebarley.api.bankaccount.model.request.InsertBankAccountRequest;
 import com.wirebarley.domain.bankaccount.repository.BankAccountRepository;
 import com.wirebarley.global.exception.errorCode.BankAccountErrorCode;
 import com.wirebarley.global.exception.exception.BusinessException;
+import com.wirebarley.global.exception.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -60,7 +61,7 @@ public class BankAccountValidator {
     public void validateDeleteBankAccount(long memberNo, long bankAccountNo) {
         boolean isExistBankAccount = bankAccountRepository.existsBankAccountByMemberNoAndBankAccountNo(memberNo, bankAccountNo);
         if (!isExistBankAccount) {
-            throw new BusinessException(BankAccountErrorCode.NOT_EXIST_BANK_ACCOUNT);
+            throw new NotFoundException(BankAccountErrorCode.NOT_EXIST_BANK_ACCOUNT);
         }
     }
 }

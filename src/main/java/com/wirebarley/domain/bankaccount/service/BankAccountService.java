@@ -7,6 +7,7 @@ import com.wirebarley.domain.bankaccount.repository.BankAccountRepository;
 import com.wirebarley.domain.member.model.entity.Member;
 import com.wirebarley.global.exception.errorCode.BankAccountErrorCode;
 import com.wirebarley.global.exception.exception.BusinessException;
+import com.wirebarley.global.exception.exception.NotFoundException;
 import com.wirebarley.global.util.Snowflake;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class BankAccountService {
      **/
     public BankAccountWithBankOutPut selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(long memberNo, long bankAccountNo) {
         return this.selectBankAccountByMemberNoAndBankAccountNo(memberNo, bankAccountNo)
-                .orElseThrow(() ->  new BusinessException(BankAccountErrorCode.NOT_FOUND_BANK_ACCOUNT));
+                .orElseThrow(() ->  new NotFoundException(BankAccountErrorCode.NOT_FOUND_BANK_ACCOUNT));
     }
 
     /**

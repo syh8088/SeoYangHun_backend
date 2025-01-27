@@ -15,13 +15,20 @@ public class GlobalExceptionController {
     @ExceptionHandler(value = BusinessException.class)
     public ErrorApiResponse<?> handleBusinessException(BusinessException e) {
 
-        return ErrorApiResponse.of(HttpStatus.valueOf(e.getHttpStatus()), e.getMessage(), e.getErrorCode(), null);
+        return ErrorApiResponse.of(e.getHttpStatus(), e.getMessage(), e.getErrorCode(), null);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = UnauthorizedException.class)
     public ErrorApiResponse<?> handleUnauthorizedException(UnauthorizedException e) {
 
-        return ErrorApiResponse.of(HttpStatus.valueOf(e.getHttpStatus()), e.getMessage(), e.getErrorCode(), null);
+        return ErrorApiResponse.of(e.getHttpStatus(), e.getMessage(), e.getErrorCode(), null);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = NotFoundException.class)
+    public ErrorApiResponse<?> handleNotFoundException(NotFoundException e) {
+
+        return ErrorApiResponse.of(e.getHttpStatus(), e.getMessage(), e.getErrorCode(), null);
     }
 }
