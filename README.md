@@ -444,6 +444,55 @@ Mysql InnoDB 기준으로 특정 테이블에 `UUID` 값을 이용해 특정 데
 추상화에 의존하므로써 특정 은행 모듈 수정되더라도 클라이언트에 영향을 최소 하도록 구성 해보았습니다.
 
 
+### 은행 서버로 API 통신 하는 과정에서 에러 핸드링 Retry 구현하기
+
+예를들어 각각의 '은행' 서버 에서 특정 API 처리시 갑작스럽게 해당 은행 서버가 갑자기 문제가 발생 했을때 서버가 바로 복구 될때까지
+`retry` 통해 이를 문제를 해결하고자 합니다.
+
+단 `retry` 를 하기 위해서는 해당 에러가 재시도를 해도 되는 에러인지 체크를 해야 합니다. 만약 '잔액 부족' 으로 인해 여러번 재시도 해도 동일한 문제가 발생 할 것 입니다.
+꼭 재시도를 해도 되는 에러만 체크해서 `retry` 를 해야 합니다.
+
+#### 재시도 할때 고려해야 할 상황들
+
+- 재시도 제한 횟수 (Retry Limited Count)
+- 지수 백오프 (Exponential Backoff)
+- 지터 (Jitter)
+
+#### 재시도 제한 횟수
+재시도 제한 횟수는 말그대로 에러 발생시 재시도를 몇회 다시 시도 할것인가 입니다.
+
+#### 지수 백오프
+지수 백오프는 재시도와 재시도 간격은 얼마나 해야할까 입니다. 지수 백오프 사이에 시간 간격이 너무 짧으면 서버 과부하로 이어집니다.
+그래서 예시로 1회 재시도시 간격을 1초로 했다면 2회 재시도시에는 간격을 2초로 이렇게 설정 하도록 합니다.
+
+#### jitter
+요청이 동시에 재시도 되지 않도록 지수 백오프 (Exponential Backoff) 외에 무작위 지연을 추가적으로 부여하는 것 입니다.
+
+
+#### Resilience4j Retry 구현
+Resilience4j 에서 지원하는 핵심 기능은 많이 있습니다. 대표적으로 CircuitBreaker, Retry 기능이 있습니다. 이 중에서 Retry 기능을 활용 해보고자 합니다.
+앞써 이야기 한대로 일시적으로 장애로 인해 은행 관련 API 호출이 실패 되었다면 재시도를 해도 되는지 체크를 한 후 Retry 기능을 활용 해야 합니다.
+
+보통 Retry 기능을 구현하기 위해서는 은행 관련 비지니스 로직에 Retry 관련 로직이 포함 되다는게 문제가 있습니다. 즉 중요한 코드와 중요하지 않은 코드 (Retry 기능을 위한 코드)가 뒤섞여 있으므로 'OCP' 에 준수 하지 않습니다.
+Resilience4j Retry 기능 통해 이 문제를 극복 하고자 합니다.
+
+```yaml
+resilience4j.retry:
+  configs:
+    bankRetryConfig:
+      maxAttempts: 3
+      waitDuration: 1000
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 5
+      retryExceptions:
+        - com.wirebarley.global.exception.exception.BankException   # retryExceptions에 지정된 예외는 재시도
+        
+  instances:
+    bankRetryConfig:
+      baseConfig: bankRetryConfig
+```
+
+
 ## 인증 방식
 
 인증 및 인가 처리 방식은 Spring Security 를 이용해서 구현 했습니다.

@@ -20,6 +20,21 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+resilience4j.retry:
+  configs:
+    bankRetryConfig:
+      maxAttempts: 3
+      waitDuration: 1000
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 5
+      retryExceptions:
+        - com.wirebarley.global.exception.exception.BankException   # retryExceptions에 지정된 예외는 재시도
+    #      ignoreExceptions:
+    #        -   # retryExceptions에 지정되지 않은 예외는 ignoreExceptions로 처리됨
+  instances:
+    bankRetryConfig:
+      baseConfig: bankRetryConfig
+
 jwt:
   secretKey: 1234
   refreshKey: 12341234
