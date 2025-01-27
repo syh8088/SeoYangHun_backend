@@ -17,4 +17,7 @@ public class BankOutPut {
         this.bankName = bankName;
     }
 
+    public static BankOutPut of(long bankNo, String bankName) {
+        return new BankOutPut(bankNo, bankName);
+    }
 }

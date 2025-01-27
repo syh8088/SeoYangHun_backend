@@ -23,7 +23,7 @@ public class BankController {
     private final BankApiService bankApiService;
 
     /**
-     * <h1>월렛 잔액 조회 하기</h1>
+     * <h1>은행 목록 조회 하기</h1>
      *
      * @author syh
      * @version 1.0.0

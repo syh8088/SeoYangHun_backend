@@ -1,6 +1,7 @@
 package com.wirebarley;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wirebarley.api.bank.service.BankApiService;
 import com.wirebarley.api.bankaccount.service.BankAccountApiService;
 import com.wirebarley.api.member.service.MemberApiService;
 import com.wirebarley.api.wallet.service.WalletApiService;
@@ -45,4 +46,7 @@ public abstract class ControllerTestSupport {
 
     @MockBean
     protected MemberApiService memberApiService;
+
+    @MockBean
+    protected BankApiService bankApiService;
 }
