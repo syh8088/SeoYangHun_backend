@@ -21,8 +21,7 @@ import java.math.BigDecimal;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -95,6 +94,31 @@ class WalletControllerTest extends ControllerTestSupport {
                 )
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("월렛 출금 TEST 입니다. - 출금 하고자 하는 금액이 0 이거나 0 보다 작을 경우 Exception 발생")
+    void withdrawBalanceLessThanZeroException() throws Exception {
+
+        // given
+        BigDecimal withdrawAmount = BigDecimal.ZERO;
+        WalletWithdrawRequest request = WalletWithdrawRequest.of(withdrawAmount);
+
+        Mockito.doNothing().when(walletApiService).withdraw(any(Long.class), any(Long.class), any(WalletWithdrawRequest.class));
+
+        // when // then
+        mockMvc.perform(
+                        post("/wallets/bank-accounts/" + bankAccountNo + "/withdraw")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value("WAE0002"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.message").value("0 보다 작은수로 입력 하셨습니다. 0 보다 큰 수를 입력 해주세요."))
+                .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test
