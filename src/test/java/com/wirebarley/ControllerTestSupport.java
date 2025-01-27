@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wirebarley.api.bank.service.BankApiService;
 import com.wirebarley.api.bankaccount.service.BankAccountApiService;
 import com.wirebarley.api.member.service.MemberApiService;
+import com.wirebarley.api.transfertransaction.service.TransferTransactionApiService;
 import com.wirebarley.api.wallet.service.WalletApiService;
 import com.wirebarley.domain.bank.repository.BankRepository;
 import com.wirebarley.domain.bankaccount.repository.BankAccountRepository;
 import com.wirebarley.domain.member.repository.MemberRepository;
+import com.wirebarley.domain.transfertransaction.repository.TransferTransactionRepository;
 import com.wirebarley.domain.wallet.repository.WalletRepository;
 import com.wirebarley.domain.wallet.repository.WalletTransactionRepository;
 import com.wirebarley.global.util.Snowflake;
@@ -46,6 +48,9 @@ public abstract class ControllerTestSupport {
     @Autowired
     protected WalletTransactionRepository walletTransactionRepository;
 
+    @Autowired
+    protected TransferTransactionRepository transferTransactionRepository;
+
     @MockBean
     protected BankAccountApiService bankAccountApiService;
 
@@ -57,4 +62,7 @@ public abstract class ControllerTestSupport {
 
     @MockBean
     protected BankApiService bankApiService;
+
+    @MockBean
+    protected TransferTransactionApiService transferTransactionApiService;
 }

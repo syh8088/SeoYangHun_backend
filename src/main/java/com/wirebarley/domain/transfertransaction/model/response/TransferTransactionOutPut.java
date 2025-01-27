@@ -39,4 +39,8 @@ public class TransferTransactionOutPut {
         this.createdDateTime = createdDateTime;
         this.transferAmount = transferAmount;
     }
+
+    public static TransferTransactionOutPut of(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount) {
+        return new TransferTransactionOutPut(transferTransactionNo, fromMemberNo, fromBankAccountNo, fromBankNo, fromBankName, fromBankAccountNumber, toBankNo, toBankName, toBankAccountNumber, createdDateTime, transferAmount);
+    }
 }
