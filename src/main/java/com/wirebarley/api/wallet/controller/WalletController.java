@@ -68,7 +68,7 @@ public class WalletController {
 
         walletValidator.validatorWalletDepositBalance(walletDepositRequest);
 
-        walletApiService.deposit(jwtMemberRequest.getMemberNo(),bankAccountNo, walletDepositRequest);
+        walletApiService.deposit(jwtMemberRequest.getMemberNo(), bankAccountNo, walletDepositRequest);
         return ResponseEntity.noContent().build();
     }
 

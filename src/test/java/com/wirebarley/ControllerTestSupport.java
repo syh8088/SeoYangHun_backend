@@ -8,6 +8,8 @@ import com.wirebarley.api.wallet.service.WalletApiService;
 import com.wirebarley.domain.bank.repository.BankRepository;
 import com.wirebarley.domain.bankaccount.repository.BankAccountRepository;
 import com.wirebarley.domain.member.repository.MemberRepository;
+import com.wirebarley.domain.wallet.repository.WalletRepository;
+import com.wirebarley.domain.wallet.repository.WalletTransactionRepository;
 import com.wirebarley.global.util.Snowflake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,6 +39,12 @@ public abstract class ControllerTestSupport {
 
     @Autowired
     protected BankAccountRepository bankAccountRepository;
+
+    @Autowired
+    protected WalletRepository walletRepository;
+
+    @Autowired
+    protected WalletTransactionRepository walletTransactionRepository;
 
     @MockBean
     protected BankAccountApiService bankAccountApiService;
