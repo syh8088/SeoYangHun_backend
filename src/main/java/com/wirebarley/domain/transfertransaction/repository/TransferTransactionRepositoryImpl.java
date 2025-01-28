@@ -40,7 +40,9 @@ public class TransferTransactionRepositoryImpl implements TransferTransactionRep
 								qTransferTransaction.toBank.bankName,
 								qTransferTransaction.toBankAccountNumber,
 								qTransferTransaction.createdDateTime,
-								qTransferTransaction.transferAmount
+								qTransferTransaction.transferAmount,
+								qTransferTransaction.fee,
+								qTransferTransaction.feeCalculatedAmount
 						)
 				)
 				.from(qTransferTransaction)

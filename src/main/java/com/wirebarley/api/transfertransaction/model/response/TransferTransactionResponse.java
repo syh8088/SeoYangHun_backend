@@ -26,9 +26,11 @@ public class TransferTransactionResponse {
     private int toBankAccountNumber;
     private LocalDateTime createdDateTime;
     private BigDecimal transferAmount;
+    private BigDecimal fee;
+    private BigDecimal feeCalculatedAmount;
 
     @Builder
-    private TransferTransactionResponse(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount) {
+    private TransferTransactionResponse(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount, BigDecimal fee, BigDecimal feeCalculatedAmount) {
         this.transferTransactionNo = transferTransactionNo;
         this.fromMemberNo = fromMemberNo;
         this.fromBankAccountNo = fromBankAccountNo;
@@ -40,6 +42,8 @@ public class TransferTransactionResponse {
         this.toBankAccountNumber = toBankAccountNumber;
         this.createdDateTime = createdDateTime;
         this.transferAmount = transferAmount;
+        this.fee = fee;
+        this.feeCalculatedAmount = feeCalculatedAmount;
     }
 
     public static List<TransferTransactionResponse> of(List<TransferTransactionOutPut> transferTransactionOutPut) {
@@ -61,6 +65,8 @@ public class TransferTransactionResponse {
                 .toBankAccountNumber(transferTransactionOutPut.getToBankAccountNumber())
                 .createdDateTime(transferTransactionOutPut.getCreatedDateTime())
                 .transferAmount(transferTransactionOutPut.getTransferAmount())
+                .fee(transferTransactionOutPut.getFee())
+                .feeCalculatedAmount(transferTransactionOutPut.getFeeCalculatedAmount())
                 .build();
     }
 }

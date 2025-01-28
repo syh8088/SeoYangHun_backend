@@ -24,9 +24,11 @@ public class TransferTransactionOutPut {
     private int toBankAccountNumber;
     private LocalDateTime createdDateTime;
     private BigDecimal transferAmount;
+    private BigDecimal fee;
+    private BigDecimal feeCalculatedAmount;
 
     @QueryProjection
-    public TransferTransactionOutPut(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount) {
+    public TransferTransactionOutPut(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount, BigDecimal fee, BigDecimal feeCalculatedAmount) {
         this.transferTransactionNo = transferTransactionNo;
         this.fromMemberNo = fromMemberNo;
         this.fromBankAccountNo = fromBankAccountNo;
@@ -38,9 +40,11 @@ public class TransferTransactionOutPut {
         this.toBankAccountNumber = toBankAccountNumber;
         this.createdDateTime = createdDateTime;
         this.transferAmount = transferAmount;
+        this.fee = fee;
+        this.feeCalculatedAmount = feeCalculatedAmount;
     }
 
-    public static TransferTransactionOutPut of(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount) {
-        return new TransferTransactionOutPut(transferTransactionNo, fromMemberNo, fromBankAccountNo, fromBankNo, fromBankName, fromBankAccountNumber, toBankNo, toBankName, toBankAccountNumber, createdDateTime, transferAmount);
+    public static TransferTransactionOutPut of(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long fromBankNo, String fromBankName, int fromBankAccountNumber, long toBankNo, String toBankName, int toBankAccountNumber, LocalDateTime createdDateTime, BigDecimal transferAmount, BigDecimal fee, BigDecimal feeCalculatedAmount) {
+        return new TransferTransactionOutPut(transferTransactionNo, fromMemberNo, fromBankAccountNo, fromBankNo, fromBankName, fromBankAccountNumber, toBankNo, toBankName, toBankAccountNumber, createdDateTime, transferAmount, fee, feeCalculatedAmount);
     }
 }

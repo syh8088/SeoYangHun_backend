@@ -16,6 +16,7 @@ import com.wirebarley.domain.transfertransaction.repository.TransferTransactionM
 import com.wirebarley.domain.transfertransaction.repository.TransferTransactionRepository;
 import com.wirebarley.domain.wallet.model.entity.Wallet;
 import com.wirebarley.domain.wallet.repository.WalletRepository;
+import com.wirebarley.global.util.FeeUtil;
 import com.wirebarley.global.util.Snowflake;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.AfterEach;
@@ -99,6 +100,8 @@ class TransferTransactionApiServiceTest extends IntegrationTestSupport {
         );
 
         // then
+        BigDecimal calculateTransferFee = FeeUtil.calculateTransferFee(transferAmount);
+
         List<TransferTransactionOutPut> transferTransactionList = transferTransactionRepository.selectFirstTransferTransactionListByMemberNo(memberNo);
 
         assertThat(transferTransactionList).hasSize(1)
@@ -111,7 +114,9 @@ class TransferTransactionApiServiceTest extends IntegrationTestSupport {
                         "toBankNo",
                         "toBankName",
                         "toBankAccountNumber",
-                        "transferAmount"
+                        "transferAmount",
+                        "fee",
+                        "feeCalculatedAmount"
                 )
                 .usingRecursiveFieldByFieldElementComparator(
                         RecursiveComparisonConfiguration.builder()
@@ -127,13 +132,12 @@ class TransferTransactionApiServiceTest extends IntegrationTestSupport {
                                 toBankNo,
                                 bank.getBankName(),
                                 toBankAccountNumber,
-                                transferAmount
+                                transferAmount,
+                                FeeUtil.getTransferFee(),
+                                calculateTransferFee
                         )
                 );
     }
-
-
-
 
     private void createStubbingBankAccount(long bankNo, String bankName, int bankAccountNumber) {
 

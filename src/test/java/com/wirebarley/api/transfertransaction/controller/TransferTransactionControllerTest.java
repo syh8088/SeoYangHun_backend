@@ -76,8 +76,7 @@ class TransferTransactionControllerTest extends ControllerTestSupport {
     void saveTransferTransactionDailyTransferLimitException() throws Exception {
 
         // given
-
-        TransferTransaction transferTransaction = TransferTransaction.of(snowflake.nextId(), 1, 1, 1, 1234, BigDecimal.valueOf(3_000_000));
+        TransferTransaction transferTransaction = TransferTransaction.of(snowflake.nextId(), 1, 1, 1, 1234, BigDecimal.valueOf(3_000_000), BigDecimal.valueOf(3_000_000), BigDecimal.valueOf(3_000_000));
         transferTransactionRepository.saveAndFlush(transferTransaction);
 
         BigDecimal transferAmount = BigDecimal.valueOf(3_000_000);
@@ -113,7 +112,7 @@ class TransferTransactionControllerTest extends ControllerTestSupport {
         // given
         List<TransferTransactionOutPut> transferTransactionOutPutList = new ArrayList<>();
         TransferTransactionOutPut transferTransactionOutPut = TransferTransactionOutPut.of(
-                1L, 1L, 1L, 1L, "우리은행", 1234, 1L, "우리은행", 5678, LocalDateTime.now(), BigDecimal.valueOf(1000)
+                1L, 1L, 1L, 1L, "우리은행", 1234, 1L, "우리은행", 5678, LocalDateTime.now(), BigDecimal.valueOf(1000), BigDecimal.valueOf(1), BigDecimal.valueOf(900)
         );
         transferTransactionOutPutList.add(transferTransactionOutPut);
 

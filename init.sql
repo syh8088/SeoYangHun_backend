@@ -156,13 +156,16 @@ create table wirebarley.transfer_transactions
 (
     transfer_transaction_no bigint   not null
         primary key,
-    from_member_no              bigint  not null,
-    from_bank_account_no                bigint  not null,
-    to_bank_no                bigint not  null,
-    to_bank_account_number                int not  null,
+    from_member_no          bigint   not null,
+    from_bank_account_no    bigint   not null,
+    to_bank_no              bigint   not null,
+    to_bank_account_number  int      not null,
     transfer_amount         decimal  not null,
-    created_at             datetime not null,
-    updated_at             datetime null
+    fee                     decimal  not null,
+    fee_calculated_amount   decimal  not null,
+    created_at              datetime null,
+    updated_at              datetime null
 );
+
 create index transfer_transactions_index
     on wirebarley.transfer_transactions (from_member_no asc, transfer_transaction_no desc, created_at desc);

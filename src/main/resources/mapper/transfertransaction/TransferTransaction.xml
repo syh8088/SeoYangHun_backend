@@ -14,7 +14,9 @@
 			to_b.bank_name AS 'toBankName',
 			tt.to_bank_account_number AS 'toBankAccountNumber',
 			tt.created_at AS 'createdDateTime',
-			tt.transfer_amount AS 'transferAmount'
+			tt.transfer_amount AS 'transferAmount',
+			tt.fee AS 'fee',
+			tt.fee_calculated_amount AS 'feeCalculatedAmount'
 		FROM
 			wirebarley.transfer_transactions AS tt
 		INNER JOIN
@@ -48,7 +50,9 @@
 			to_b.bank_name AS 'toBankName',
 			tt.to_bank_account_number AS 'toBankAccountNumber',
 			tt.created_at AS 'createdDateTime',
-			tt.transfer_amount AS 'transferAmount'
+			tt.transfer_amount AS 'transferAmount',
+			tt.fee AS 'fee',
+			tt.fee_calculated_amount AS 'feeCalculatedAmount'
 		FROM
 			wirebarley.transfer_transactions AS tt
 		INNER JOIN

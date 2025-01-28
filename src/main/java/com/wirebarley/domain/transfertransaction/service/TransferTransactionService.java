@@ -5,6 +5,7 @@ import com.wirebarley.domain.transfertransaction.model.request.SelectTransferTra
 import com.wirebarley.domain.transfertransaction.model.response.TransferTransactionOutPut;
 import com.wirebarley.domain.transfertransaction.repository.TransferTransactionMapper;
 import com.wirebarley.domain.transfertransaction.repository.TransferTransactionRepository;
+import com.wirebarley.global.util.FeeUtil;
 import com.wirebarley.global.util.Snowflake;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,10 @@ public class TransferTransactionService {
     @Transactional
     public void saverTransferTransaction(long fromMemberNo, long fromBankAccountNo, long toBankNo, int toBankAccountNumber, BigDecimal transferAmount) {
 
+        BigDecimal feeCalculatedAmount = FeeUtil.calculateTransferFee(transferAmount);
+
         TransferTransaction transferTransaction
-                = TransferTransaction.of(snowflake.nextId(), fromMemberNo, fromBankAccountNo, toBankNo, toBankAccountNumber, transferAmount);
+                = TransferTransaction.of(snowflake.nextId(), fromMemberNo, fromBankAccountNo, toBankNo, toBankAccountNumber, transferAmount, FeeUtil.getTransferFee(), feeCalculatedAmount);
 
         transferTransactionRepository.save(transferTransaction);
     }

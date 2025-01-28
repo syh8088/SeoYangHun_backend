@@ -39,17 +39,25 @@ public class TransferTransaction extends CommonEntity {
     @Column(name = "transfer_amount")
     private BigDecimal transferAmount;
 
+    @Column(name = "fee")
+    private BigDecimal fee;
+
+    @Column(name = "fee_calculated_amount")
+    private BigDecimal feeCalculatedAmount;
+
     @Builder
-    private TransferTransaction(Long transferTransactionNo, Member fromMember, BankAccount fromBankAccount, Bank toBank, int toBankAccountNumber, BigDecimal transferAmount) {
+    private TransferTransaction(Long transferTransactionNo, Member fromMember, BankAccount fromBankAccount, Bank toBank, int toBankAccountNumber, BigDecimal transferAmount, BigDecimal fee, BigDecimal feeCalculatedAmount) {
         this.transferTransactionNo = transferTransactionNo;
         this.fromMember = fromMember;
         this.fromBankAccount = fromBankAccount;
         this.toBank = toBank;
         this.toBankAccountNumber = toBankAccountNumber;
         this.transferAmount = transferAmount;
+        this.fee = fee;
+        this.feeCalculatedAmount = feeCalculatedAmount;
     }
 
-    public static TransferTransaction of(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long toBankNo, int toBankAccountNumber, BigDecimal transferAmount) {
+    public static TransferTransaction of(long transferTransactionNo, long fromMemberNo, long fromBankAccountNo, long toBankNo, int toBankAccountNumber, BigDecimal transferAmount, BigDecimal fee, BigDecimal feeCalculatedAmount) {
 
         Member fromMember = Member.of(fromMemberNo);
         BankAccount fromBankAccount = BankAccount.of(fromBankAccountNo);
@@ -62,6 +70,8 @@ public class TransferTransaction extends CommonEntity {
                 .toBank(toBank)
                 .toBankAccountNumber(toBankAccountNumber)
                 .transferAmount(transferAmount)
+                .fee(fee)
+                .feeCalculatedAmount(feeCalculatedAmount)
                 .build();
     }
 }
