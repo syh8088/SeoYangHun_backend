@@ -595,7 +595,10 @@ role 을 추가하거나 삭제 할 수 있도록 구성 해보았습니다.
 ![계좌 등록 Sequence Diagram](./md_resource/SequenceDiagramCreateBankAccount.png)
 
 ### 입금 Sequence Diagram
-![주문 checkout Sequence Diagram](./md_resource/SequenceDiagramWalletDEPOSIT.png)
+![입금 Sequence Diagram](./md_resource/SequenceDiagramWalletDEPOSIT.png)
 
 ### 출금 Sequence Diagram
-![주문 checkout Sequence Diagram](./md_resource/SequenceDiagramWalletWITHDRAW.png)
+![출금 Sequence Diagram](./md_resource/SequenceDiagramWalletWITHDRAW.png)
+
+### 계좌 이체 Sequence Diagram
+![계좌 이체 Sequence Diagram](./md_resource/SequenceDiagramCreateTransferTransaction.png)

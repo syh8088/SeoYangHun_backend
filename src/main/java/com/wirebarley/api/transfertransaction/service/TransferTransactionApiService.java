@@ -47,7 +47,6 @@ public class TransferTransactionApiService {
 
         BankOutPut toBankOutPut = bankService.selectBankByBankNo(toBankNo);
 
-
         BankAccountAdapter handlerBankAccountService = BankAccountAdapter.getHandlerBankAccountServices(bankAccountAdapters);
         handlerBankAccountService.transferTransaction(
                 bankAccountWithBankOutPut.getBankName(),
