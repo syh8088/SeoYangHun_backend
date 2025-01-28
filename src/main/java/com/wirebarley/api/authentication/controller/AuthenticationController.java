@@ -55,6 +55,9 @@ public class AuthenticationController {
 
             return ResponseEntity.ok().body(authorizationResponse);
         }
+        catch (UnauthorizedException e) {
+            throw new UnauthorizedException(MemberErrorCode.USER_NAME_NOT_FOUND);
+        }
         catch (AuthenticationException e) {
             throw new UnauthorizedException(MemberErrorCode.AUTHENTICATION_FAILED);
         }

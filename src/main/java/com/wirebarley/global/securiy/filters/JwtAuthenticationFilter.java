@@ -96,6 +96,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 this.errorResponse(response, e.getOriginErrorCode(), e);
             }
         }
+        else {
+            filterChain.doFilter(request, response);
+        }
     }
 
     /**

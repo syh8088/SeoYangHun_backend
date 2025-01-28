@@ -12,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +27,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         Member member = memberRepository.findById(username);
         if (member == null) {
-            throw new UnauthorizedException(MemberErrorCode.USER_NAME_NOT_FOUND);
+            throw new UnauthorizedException(MemberErrorCode.AUTHENTICATION_FAILED);
         }
 
         List<String> roleNameList = roleRepository.selectRoleNameListByMemberNo(member.getMemberNo());
