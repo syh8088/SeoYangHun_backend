@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "2ec6e68f-5bf0-47ab-91fb-a6fcc79376e6",
+		"name": "Wirebarley Backend Enginner Coding Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5617189"
+	},
+	"item": [
+		{
+			"name": "로그인",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"test\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/authorize",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authorize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "회원가입",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"test\",\r\n    \"password\": \"1234\",\r\n    \"name\": \"테스트\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/members/join",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"members",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "은행 목록 조회",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4NDgyNDA3LCJpYXQiOjE3Mzc4Nzc2MDd9.iYv3yiMCHmBJ8zTplhFUS8Y8MRJnoEprFNrzcF6aSmw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/banks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "은행 계좌 등록",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4NjM3NTk5LCJpYXQiOjE3MzgwMzI3OTl9.UW-tJV4XYErpf7PNSsBVzqMo4la2xKU4CFr2pCVSAN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankName\": \"우리은행\",\r\n    \"bankAccountNumber\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/bank-accounts/banks/140135180074508285",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bank-accounts",
+						"banks",
+						"140135180074508285"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "은행 계좌 삭제",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4NDgyNDA3LCJpYXQiOjE3Mzc4Nzc2MDd9.iYv3yiMCHmBJ8zTplhFUS8Y8MRJnoEprFNrzcF6aSmw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankName\": \"우리은행\",\r\n    \"bankAccountNumber\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/bank-accounts/141816067621261312",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bank-accounts",
+						"141816067621261312"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "등록된 은행 계좌 목록 조회",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4NDgyNDA3LCJpYXQiOjE3Mzc4Nzc2MDd9.iYv3yiMCHmBJ8zTplhFUS8Y8MRJnoEprFNrzcF6aSmw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankName\": \"우리은행\",\r\n    \"bankAccountNumber\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/bank-accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bank-accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "입금하기",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"depositAmount\": 100000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/wallets/bank-accounts/141816067621261312/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallets",
+						"bank-accounts",
+						"141816067621261312",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "출금하기",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"withdrawAmount\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/wallets/bank-accounts/141816067621261312/withdraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallets",
+						"bank-accounts",
+						"141816067621261312",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "잔액 조회",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/wallets/balance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallets",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallet - 입출금 거래내역",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/wallets/transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallets",
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "계좌 이체",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4NjM3NTk5LCJpYXQiOjE3MzgwMzI3OTl9.UW-tJV4XYErpf7PNSsBVzqMo4la2xKU4CFr2pCVSAN0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromBankAccountNo\": \"142563925718208512\",\r\n    \"toBankNo\": \"140135180074508285\",\r\n    \"toBankAccountNumber\": \"5678\",\r\n    \"transferAmount\": \"50000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transfer-transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfer-transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "계좌 이체 이력 조회 (첫번째)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/transfer-transactions?limit=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfer-transactions"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "계좌 이체 이력 조회 (두번째)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accessToken",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNzM4MTQ1OTM4LCJpYXQiOjE3Mzc1NDExMzh9.Z7u2hAYZZkwXL_xZe-PZ7HxzWSyaUwty-YMJM70V3XI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/transfer-transactions?limit=5&transferTransactionNo=141822688882548736&createdDateTime=2025-01-26T17:32:44",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfer-transactions"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "transferTransactionNo",
+							"value": "141822688882548736"
+						},
+						{
+							"key": "createdDateTime",
+							"value": "2025-01-26T17:32:44"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
