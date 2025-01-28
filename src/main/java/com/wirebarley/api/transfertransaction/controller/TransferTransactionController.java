@@ -55,7 +55,7 @@ public class TransferTransactionController {
             @RequestBody InsertTransferTransactionRequest insertTransferTransactionRequest
     ) {
 
-        transferTransactionValidator.saveTransferTransaction(jwtMemberRequest.getMemberNo());
+        transferTransactionValidator.saveTransferTransaction(jwtMemberRequest.getMemberNo(), insertTransferTransactionRequest.getTransferAmount());
 
         transferTransactionApiService.saveTransferTransaction(
                 jwtMemberRequest.getMemberNo(),

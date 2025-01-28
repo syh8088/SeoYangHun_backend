@@ -12,7 +12,7 @@ import com.wirebarley.domain.member.model.response.MemberWithWalletOutPut;
 import com.wirebarley.domain.member.repository.MemberRepository;
 import com.wirebarley.domain.wallet.model.entity.Wallet;
 import com.wirebarley.domain.wallet.repository.WalletRepository;
-import com.wirebarley.global.exception.exception.BusinessException;
+import com.wirebarley.global.exception.exception.NotFoundException;
 import com.wirebarley.global.util.Snowflake;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -102,7 +102,7 @@ class BankAccountApiServiceTest extends IntegrationTestSupport {
 
         // then
         assertThatThrownBy(() -> bankAccountService.selectBankAccountThenThrowExceptionByMemberNoAndBankAccountNo(memberNo, bankAccountNo))
-                .isInstanceOf(BusinessException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessage("계좌가 존재하지 않습니다.");
     }
 

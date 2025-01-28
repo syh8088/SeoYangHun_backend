@@ -4,6 +4,7 @@ import com.wirebarley.ControllerTestSupport;
 import com.wirebarley.api.transfertransaction.model.request.InsertTransferTransactionRequest;
 import com.wirebarley.api.transfertransaction.model.request.SelectTransferTransactionListRequest;
 import com.wirebarley.domain.member.model.entity.Member;
+import com.wirebarley.domain.transfertransaction.model.entity.TransferTransaction;
 import com.wirebarley.domain.transfertransaction.model.response.TransferTransactionOutPut;
 import com.wirebarley.mock.WithCustomMockUser;
 import org.junit.jupiter.api.AfterEach;
@@ -38,6 +39,7 @@ class TransferTransactionControllerTest extends ControllerTestSupport {
     @AfterEach
     void tearDown() {
         memberRepository.deleteAllInBatch();
+        transferTransactionRepository.deleteAllInBatch();
     }
 
     @Test
@@ -65,6 +67,42 @@ class TransferTransactionControllerTest extends ControllerTestSupport {
                 )
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("계좌 이체 기능 TEST 입니다. - 300만원 한도 Exception 체크")
+    void saveTransferTransactionDailyTransferLimitException() throws Exception {
+
+        // given
+
+        TransferTransaction transferTransaction = TransferTransaction.of(snowflake.nextId(), 1, 1, 1, 1234, BigDecimal.valueOf(3_000_000));
+        transferTransactionRepository.saveAndFlush(transferTransaction);
+
+        BigDecimal transferAmount = BigDecimal.valueOf(3_000_000);
+        InsertTransferTransactionRequest request = InsertTransferTransactionRequest.of(1, 1, 1234, transferAmount);
+
+        Mockito.doNothing().when(transferTransactionApiService).saveTransferTransaction(
+                any(Long.class),
+                any(Long.class),
+                any(Long.class),
+                any(Integer.class),
+                any(BigDecimal.class)
+        );
+
+        // when // then
+        mockMvc.perform(
+                        post("/transfer-transactions")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value("TTE0001"))
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.message").value("1일 이체 한도는 3,000,000원 금액 까지만 가능 합니다."))
+                .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test

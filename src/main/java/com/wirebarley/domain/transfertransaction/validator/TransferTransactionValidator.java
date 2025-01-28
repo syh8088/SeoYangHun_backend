@@ -28,19 +28,19 @@ public class TransferTransactionValidator {
     /**
      * <h1>이체 유효성 검사하기</h1>
      * <pre>
-     *     - 1일 출금 한도: 300 만 원 유효성 검사
+     *     - 1일 이체 한도: 300 만 원 유효성 검사
      * </pre>
      * @author syh
      * @version 1.0.0
      **/
-    public void saveTransferTransaction(long memberNo) {
+    public void saveTransferTransaction(long memberNo, BigDecimal transferAmount) {
 
         LocalDateTime startDatetime = TimeConverter.nowStartDateTime();
         LocalDateTime endDatetime = TimeConverter.nowEndDateTime();
         BigDecimal dailyTransfer
                 = transferTransactionRepository.selectDailyTransferByMemberNo(memberNo, startDatetime, endDatetime);
 
-        if (!Objects.isNull(dailyTransfer) && DAILY_TRANSFER_LIMIT.compareTo(dailyTransfer) < 0) {
+        if (!Objects.isNull(dailyTransfer) && DAILY_TRANSFER_LIMIT.compareTo(dailyTransfer.add(transferAmount)) < 0) {
             throw new BusinessException(TransferTransactionErrorCode.DAILY_TRANSFER_LIMIT, new Object[]{ FORMATTER.format(DAILY_TRANSFER_LIMIT.longValue()) });
         }
     }
