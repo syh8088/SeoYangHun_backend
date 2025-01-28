@@ -34,6 +34,10 @@ public class UnauthorizedException extends RuntimeException {
         return errorCode.getCode();
     }
 
+    public ErrorCode getOriginErrorCode() {
+        return errorCode;
+    }
+
     public int getHttpStatus() {
         return this.httpStatus;
     }

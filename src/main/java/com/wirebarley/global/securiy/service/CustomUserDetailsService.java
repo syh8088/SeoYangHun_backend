@@ -3,6 +3,8 @@ package com.wirebarley.global.securiy.service;
 import com.wirebarley.domain.member.model.entity.Member;
 import com.wirebarley.domain.member.repository.MemberRepository;
 import com.wirebarley.domain.role.repository.RoleRepository;
+import com.wirebarley.global.exception.errorCode.MemberErrorCode;
+import com.wirebarley.global.exception.exception.UnauthorizedException;
 import com.wirebarley.global.model.response.MemberDto;
 import com.wirebarley.global.model.response.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Member member = memberRepository.findById(username);
         if (member == null) {
-            throw new UsernameNotFoundException("No user found with id: " + username);
+            throw new UnauthorizedException(MemberErrorCode.USER_NAME_NOT_FOUND);
         }
 
         List<String> roleNameList = roleRepository.selectRoleNameListByMemberNo(member.getMemberNo());

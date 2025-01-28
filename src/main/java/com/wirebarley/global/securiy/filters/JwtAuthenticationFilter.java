@@ -1,8 +1,11 @@
 package com.wirebarley.global.securiy.filters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wirebarley.global.exception.errorCode.ErrorCode;
 import com.wirebarley.global.exception.errorCode.MemberErrorCode;
 import com.wirebarley.global.exception.exception.UnauthorizedException;
 import com.wirebarley.global.jwt.JwtTokenProvider;
+import com.wirebarley.global.model.response.ErrorApiResponse;
 import com.wirebarley.global.model.response.PrincipalDetails;
 import com.wirebarley.global.securiy.service.CustomUserDetailsService;
 import com.wirebarley.global.token.RestAuthenticationToken;
@@ -16,12 +19,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Slf4j
@@ -31,6 +36,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final CustomUserDetailsService userServiceHandler;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -68,19 +75,37 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * SecurityContextHolder 내에 authentication 객체(이전에 인증된 정보)가 없는 상태인지를 검사한다.
          */
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            PrincipalDetails principalDetails = (PrincipalDetails) userServiceHandler.loadUserByUsername(username);
 
-            if (jwtTokenProvider.validateAccessToken(jwt, principalDetails.getUsername())) {
+            try {
+                PrincipalDetails principalDetails = (PrincipalDetails) userServiceHandler.loadUserByUsername(username);
 
-                RestAuthenticationToken authenticationToken
-                        = new RestAuthenticationToken(principalDetails.getAuthorities(), principalDetails, null);
+                if (jwtTokenProvider.validateAccessToken(jwt, principalDetails.getUsername())) {
 
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    RestAuthenticationToken authenticationToken
+                            = new RestAuthenticationToken(principalDetails.getAuthorities(), principalDetails, null);
 
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
+
+                filterChain.doFilter(request, response);
+            }
+            catch (UnauthorizedException e) {
+                log.error("JwtAuthenticationFilter.doFilterInternal.UnauthorizedException = {}", e);
+                this.errorResponse(response, e.getOriginErrorCode(), e);
             }
         }
+    }
 
-        filterChain.doFilter(request, response);
+    /**
+     * <h1>AuthorizedException 발생시 Exception Response 처리</h1>
+     */
+    private void errorResponse(HttpServletResponse response, ErrorCode errorCode, UnauthorizedException e) throws IOException {
+        ErrorApiResponse<Void> errorApiResponse = ErrorApiResponse.of(errorCode.getHttpStatus(), e.getMessage(), errorCode.getCode(), null);
+        response.setStatus(errorCode.getHttpStatus());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.getWriter().write(mapper.writeValueAsString(errorApiResponse));
     }
 }

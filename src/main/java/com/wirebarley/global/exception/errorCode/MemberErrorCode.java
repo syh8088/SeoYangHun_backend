@@ -11,6 +11,7 @@ public enum MemberErrorCode implements ErrorCode {
     NOT_EXIST_ID("MFC0005", HttpStatus.BAD_REQUEST.value()),
     NOT_EXIST_PASSWORD("MFC0006", HttpStatus.BAD_REQUEST.value()),
     AUTHENTICATION_FAILED("MFC0007", HttpStatus.UNAUTHORIZED.value()),
+    USER_NAME_NOT_FOUND("MFC0008", HttpStatus.UNAUTHORIZED.value()),
 
 
             ;
