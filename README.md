@@ -28,6 +28,12 @@ docker build -t wirebarley-service .
 // 4. docker-compose 를 실행 합니다. (mysql server -> wirebarley-service 순서로 실행 됩니다.)
 docker-compose up -d
 ```
+#### 실행이 안된다면 인텔리제이에서 지원하는 `bootJar` 명령어 이용해보기
+#### `./gradlew bootJar` <-- 클릭!! 
+![인텔리제이 bootJar](./md_resource/bootJar.png)
+
+
+
 
 #### Service Endpoint
 - Mysql
