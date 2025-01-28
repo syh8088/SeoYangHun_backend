@@ -30,7 +30,7 @@ docker-compose up -d
 ```
 #### 실행이 안된다면 인텔리제이에서 지원하는 `bootJar` 명령어 이용해보기
 #### `./gradlew bootJar` <-- 클릭!! 
-![인텔리제이 bootJar](./md_resource/bootJar.png)
+![인텔리제이 bootJar](./md_resource/bootjar.png)
 
 
 
