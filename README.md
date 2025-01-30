@@ -8,9 +8,9 @@
 - Junit5
 - JPA
 - QueryDsl
-- Spring Security
-- Mybatis
-- JWT
+- Spring Security - 인증 및 인가 처리시 사용
+- Mybatis - Cursor Paging 구현 목적 사용
+- JWT - 인증 및 인가 처리시 필요한 토큰 생성 그리고 검증시 사용
 - Mysql 8.x
 - H2 (TEST 코드 실행시에만 해당)
 - docker
